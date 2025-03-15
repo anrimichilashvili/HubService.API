@@ -1,6 +1,7 @@
 ﻿using HubService.Application.Dtos;
 using HubService.Application.Interfaces.Repositories;
 using HubService.Application.Interfaces.Services;
+using HubService.Application.Messaging;
 using HubService.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -13,10 +14,11 @@ namespace HubService.Application.Services
     public class BetService : IBetService
     {
         private readonly IBetRepository _betRepository;
-
-        public BetService(IBetRepository betRepository)
+        private readonly IMessageProducer _messageProducer;
+        public BetService(IBetRepository betRepository, IMessageProducer messageProducer)
         {
             _betRepository = betRepository;
+            _messageProducer = messageProducer;
         }
 
         public async Task<ResultDTO> CreateBetAsync(decimal amount)
@@ -30,6 +32,7 @@ namespace HubService.Application.Services
                 };
 
                 var result = await _betRepository.CreateAsync(bet);
+                _messageProducer.SendMessage(result);
                 return new ResultDTO { Success = true, Data = result };
             }
             catch (Exception ex)
