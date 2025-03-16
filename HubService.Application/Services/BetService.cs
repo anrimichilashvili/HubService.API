@@ -1,8 +1,9 @@
 ﻿using HubService.Application.Dtos;
 using HubService.Application.Interfaces.Repositories;
 using HubService.Application.Interfaces.Services;
-using HubService.Application.RabbitMq;
+using HubService.Application.RabbitMq.Interfaces;
 using HubService.Domain.Entities;
+using RabbitMQ.Client;
 using System;
 using System.Collections.Generic;
 using System.Linq;

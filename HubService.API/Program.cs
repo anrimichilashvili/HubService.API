@@ -5,13 +5,15 @@ using HubService.Application.Interfaces.Services.HubService.Application.Interfac
 using HubService.Application.Services;
 using HubService.Infrastructure;
 using HubService.Infrastructure.Implementation;
-using HubService.Application.RabbitMq;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using HubService.Application.RabbitMq.Interfaces;
+using HubService.Application.RabbitMq.Services;
+using HubService.API.BackgroundServices;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -63,6 +65,10 @@ builder.Services.AddScoped<IActiveUserService, ActiveUserService>();
 
 builder.Services.AddSingleton<IRabbitMqConnection>(new RabbitMqConnection(builder.Configuration));
 builder.Services.AddScoped<IMessageProducer, RabbitMqproducer>();
+builder.Services.AddSingleton<IMessageConsumer, RabbitMqConsumer>();
+
+builder.Services.AddHostedService<SenderMessageListener>();
+
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

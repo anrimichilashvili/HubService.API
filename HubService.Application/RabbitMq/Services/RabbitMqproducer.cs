@@ -1,9 +1,10 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using HubService.Application.RabbitMq.Interfaces;
+using Microsoft.Extensions.Configuration;
 using RabbitMQ.Client;
 using System.Text;
 using System.Text.Json;
 
-namespace HubService.Application.RabbitMq
+namespace HubService.Application.RabbitMq.Services
 {
     public class RabbitMqproducer : IMessageProducer
     {
@@ -17,9 +18,9 @@ namespace HubService.Application.RabbitMq
 
         public void SendMessage<T>(T message)
         {
-            var exchangeName = _configuration["RabbitMq:ExchangeName"];
-            var routingKey = _configuration["RabbitMq:RoutingKey"];
-            var queueName = _configuration["RabbitMq:QueueName"];
+            var exchangeName = _configuration["SenderHubServiceRabbitMq:ExchangeName"];
+            var routingKey = _configuration["SenderHubServiceRabbitMq:RoutingKey"];
+            var queueName = _configuration["SenderHubServiceRabbitMq:QueueName"];
 
             using var channel = _connection.Connection.CreateModel();
 
@@ -32,7 +33,6 @@ namespace HubService.Application.RabbitMq
             var body = Encoding.UTF8.GetBytes(json);
 
             channel.BasicPublish(exchangeName, routingKey, false, null, body);
-
         }
     }
 }

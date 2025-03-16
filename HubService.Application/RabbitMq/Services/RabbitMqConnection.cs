@@ -1,8 +1,9 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using HubService.Application.RabbitMq.Interfaces;
+using Microsoft.Extensions.Configuration;
 using RabbitMQ.Client;
 
 
-namespace HubService.Application.RabbitMq
+namespace HubService.Application.RabbitMq.Services
 {
     public class RabbitMqConnection : IRabbitMqConnection, IDisposable
     {
