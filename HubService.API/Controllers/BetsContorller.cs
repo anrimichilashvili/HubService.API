@@ -34,9 +34,9 @@ namespace HubService.API.Controllers
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             var result = await _betService.CreateBetAsync(request.Amount, request.IsWin);
             if (!result.Success)
-                return BadRequest(result);
+                return BadRequest(result.ErrorMessage);
 
-            return Ok(result);
+            return Ok(result.Data);
 
         }
     }

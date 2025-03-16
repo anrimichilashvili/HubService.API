@@ -29,20 +29,20 @@ namespace HubService.Application.Services
             };
 
             var result = await _userManager.CreateAsync(idemtityUser, user.Password);
-            if(result.Succeeded)
-            return new ResultDTO { Success=true, Data = idemtityUser };
+            if (result.Succeeded)
+                return new ResultDTO { Success = true, Data = idemtityUser };
             else return new ResultDTO { Success = false, Data = result.Errors };
         }
 
         public async Task<ResultDTO> Login(UserModelDto user)
         {
             var identityUser = await _userManager.FindByNameAsync(user.UserName);
-            if (identityUser == null) { return new ResultDTO { Success=false}; }
-            var result =  await _userManager.CheckPasswordAsync(identityUser, user.Password);
-            return new ResultDTO { Success=true,Data= identityUser };
+            if (identityUser == null) { return new ResultDTO { Success = false }; }
+            var result = await _userManager.CheckPasswordAsync(identityUser, user.Password);
+            return new ResultDTO { Success = true, Data = identityUser };
         }
 
-        public string GenerateToeknString(UserModelDto user)
+        public LoginResponseDto GenerateToeknString(UserModelDto user)
         {
             var claims = new List<Claim>
             {
@@ -67,7 +67,7 @@ namespace HubService.Application.Services
                 signingCredentials: signingCredentials
                 );
             string tokenString = new JwtSecurityTokenHandler().WriteToken(securityToken);
-            return tokenString;
+            return new LoginResponseDto { Token = tokenString };
         }
     }
 }

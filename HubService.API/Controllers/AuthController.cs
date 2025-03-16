@@ -29,7 +29,7 @@ namespace HubService.API.Controllers
 
 
         [HttpPost("Login")]
-        public async Task<IActionResult> Login(UserModelDto user)
+        public async Task<ActionResult<LoginResponseDto>> Login(UserModelDto user)
         {
             if (!ModelState.IsValid)
             {

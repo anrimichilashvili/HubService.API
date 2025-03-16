@@ -1,6 +1,7 @@
 ﻿using HubService.API.Hubs;
 using HubService.Application.Models;
 using HubService.Application.RabbitMq.Interfaces;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.SignalR;
 
 namespace HubService.API.BackgroundServices
@@ -24,11 +25,11 @@ namespace HubService.API.BackgroundServices
             {
                 _logger.LogInformation("Received PrizeNotification for user {Username}, Prize {Prize}",
                     notification.CreatedBy, notification.Prize);
-
+                var message = $"Received PrizeNotification for user {notification.CreatedBy}, Prize {notification.Prize}";
                 if (NotificationHub.IsUserOnline(notification.CreatedBy))
                 {
                     _hubContext.Clients.User(notification.CreatedBy)
-                        .SendAsync("ReceivePrizeNotification", notification);
+                        .SendAsync("PrizeNotification", message);
                 }
                 else
                 {

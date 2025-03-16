@@ -11,6 +11,6 @@ namespace HubService.Application.Interfaces.Services
     {
         Task<ResultDTO> RegisterUser(UserModelDto user);
         Task<ResultDTO> Login(UserModelDto user);
-        string GenerateToeknString(UserModelDto user);
+        LoginResponseDto GenerateToeknString(UserModelDto user);
     }
 }
