@@ -14,6 +14,7 @@ using System.Text;
 using HubService.Application.RabbitMq.Interfaces;
 using HubService.Application.RabbitMq.Services;
 using HubService.API.BackgroundServices;
+using HubService.API.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -87,6 +88,8 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.MapHub<NotificationHub>("/notificationHub");
 
 app.MapControllers();
 
