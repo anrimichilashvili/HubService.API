@@ -32,7 +32,7 @@ namespace HubService.API.Controllers
         public async Task<IActionResult> CreateBet([FromBody] CreateBetDto request)
         {
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            var result = await _betService.CreateBetAsync(request.Amount);
+            var result = await _betService.CreateBetAsync(request.Amount, request.IsWin);
             if (!result.Success)
                 return BadRequest(result);
 

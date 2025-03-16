@@ -9,6 +9,6 @@ namespace HubService.Application.Interfaces.Services
 {
     public interface IBetService
     {
-        Task<ResultDTO> CreateBetAsync(decimal amount);
+        Task<ResultDTO> CreateBetAsync(decimal amount, bool isWin);
     }
 }

@@ -22,13 +22,14 @@ namespace HubService.Application.Services
             _messageProducer = messageProducer;
         }
 
-        public async Task<ResultDTO> CreateBetAsync(decimal amount)
+        public async Task<ResultDTO> CreateBetAsync(decimal amount, bool isWin)
         {
             try
             {
                 var bet = new BetEntity
                 {
                     Amount = amount,
+                    IsWin = isWin,
                     PlacedAt = DateTime.UtcNow
                 };
 
