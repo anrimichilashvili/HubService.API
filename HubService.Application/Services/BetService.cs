@@ -1,7 +1,7 @@
 ﻿using HubService.Application.Dtos;
 using HubService.Application.Interfaces.Repositories;
 using HubService.Application.Interfaces.Services;
-using HubService.Application.Messaging;
+using HubService.Application.RabbitMq;
 using HubService.Domain.Entities;
 using System;
 using System.Collections.Generic;

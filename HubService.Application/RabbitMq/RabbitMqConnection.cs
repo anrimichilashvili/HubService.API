@@ -2,7 +2,7 @@
 using RabbitMQ.Client;
 
 
-namespace HubService.Application.Messaging
+namespace HubService.Application.RabbitMq
 {
     public class RabbitMqConnection : IRabbitMqConnection, IDisposable
     {

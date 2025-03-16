@@ -5,7 +5,7 @@ using HubService.Application.Interfaces.Services.HubService.Application.Interfac
 using HubService.Application.Services;
 using HubService.Infrastructure;
 using HubService.Infrastructure.Implementation;
-using HubService.Application.Messaging;
+using HubService.Application.RabbitMq;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;

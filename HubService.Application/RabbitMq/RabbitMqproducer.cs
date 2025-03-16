@@ -3,7 +3,7 @@ using RabbitMQ.Client;
 using System.Text;
 using System.Text.Json;
 
-namespace HubService.Application.Messaging
+namespace HubService.Application.RabbitMq
 {
     public class RabbitMqproducer : IMessageProducer
     {
