@@ -1,8 +1,10 @@
 ﻿using HubService.Application.Interfaces.Services.HubService.Application.Interfaces.Services;
 using HubService.Domain.Entities;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -88,6 +90,40 @@ namespace HubService.Infrastructure
             if (entry.Properties.Any(p => p.Metadata.Name == propertyName))
             {
                 entry.Property(propertyName).IsModified = isModified;
+            }
+        }
+
+
+        public static async Task SeedDefaultUserAsync(IServiceProvider serviceProvider)
+        {
+            using var scope = serviceProvider.CreateScope();
+            var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
+
+            if (!userManager.Users.Any())
+            {
+                var defaultUser = new IdentityUser
+                {
+                    UserName = "admin",
+                    Email = "admin@example.com",
+                    EmailConfirmed = true
+                };
+
+                var result = await userManager.CreateAsync(defaultUser, "Admin123!");
+                if (!result.Succeeded)
+                {
+                    foreach (var error in result.Errors)
+                    {
+                        Console.WriteLine($"Error seeding user: {error.Description}");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Default user seeded successfully.");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Users already exist, seeding skipped.");
             }
         }
     }
